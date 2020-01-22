@@ -1,0 +1,108 @@
+node {
+	def status = 'STARTED'
+	def cucumberOpt = 'src/main/resources/features/ngfw_oms_fixedwireless_303332a_neg.feature'
+	def mvn_user_setting = '/opt/app/lsadm/appl/cucumber_bdd/settings.xml'
+	def error = null
+
+	try{
+		status = 'IN_PROGRESS'
+		stage ('Code Checkout'){
+			try {
+				checkoutProject()
+			}catch(e) {
+				status = "FAIL"
+				throw e
+			}
+		}
+		stage ('Build'){
+			try {
+				buildProject()
+			}catch(e) {
+				status = "FAIL"
+				error = e
+			}
+		}
+		stage ('Execute Acceptance Scenarios'){
+			try {
+				executeCucumberTest(cucumberOpt,mvn_user_setting)
+			}catch(e) {
+				status = "FAIL"
+				error = e
+			}
+		}
+		stage ('Generate Report'){
+			try {
+				generateCucumberReport()
+			}catch(e) {
+				status = "FAIL"
+				error = e
+			}
+		}
+		stage ('Send Report'){
+			echo 'Sending report '
+			if(status != "FAIL") {
+				status = "SUCCESS"
+			}
+			try {
+				mailExecutionReport(status)
+			}catch(e) {
+				error = e
+			}
+		}   
+	} catch(e){
+		status = "FAIL"
+		sh "echo 'Pipeline Execution Failed : ${status}'"
+		mailExecutionReport(status,'Unexpected Pipeline Execution Failuer. Please check Jenkins Pipeline' )
+		throw e
+	}
+	
+	if(error != null) {
+		echo 'Pipeline Execution Failed , throwing expecption'
+		throw error
+	}
+	
+}
+
+def checkoutProject() {
+	echo 'Check out code from svn'
+	checkout([$class: 'SubversionSCM',
+			   additionalCredentials: [],
+			   excludedCommitMessages: '',
+			   excludedRegions: '',
+			   excludedRevprop: '',
+			   excludedUsers: '',
+			   filterChangelog: false,
+			   ignoreDirPropChanges: false,
+			   includedRegions: '',
+			   locations: [[credentialsId: '38895509-f701-4f2e-83c7-2e17af45d41f', depthOption: 'infinity', ignoreExternalsOption: true, local: '.', remote: 'svn://scm.it.att.com:13225/branches/automation-bdd']], quietOperation: true, workspaceUpdater: [$class: 'UpdateUpdater']])
+	echo 'Code checkout/update succssful'
+}
+
+def buildProject() {
+	echo 'Start Application build'
+	sh "mvn clean install -Dmaven.test.skip=true"
+	echo 'Build successfully'
+}
+
+def executeCucumberTest(cucumberOpt,mvn_user_setting) {
+		sh "echo 'Start executing cucumber feature file ${cucumberOpt}'"
+		sh "mvn test -Dspring.profiles.active=st8 -Dcom.bdd.automation.jms.adapter=false -Dcucumber.options=${cucumberOpt} -Dbdd.automation.encrypt.decrypt.key=kf#78B -s ${mvn_user_setting}"
+//		sh "exit 1"
+		echo 'Successfully executed cucumber feature'
+}
+
+def generateCucumberReport() {
+	echo 'Generate cucumber reports'
+	cucumber fileIncludePattern: '**/*.json', sortingMethod: 'ALPHABETICAL'
+	echo 'Cucumber reports generated'
+}
+
+def mailExecutionReport(execStatus) {
+	sh "( echo 'From: aa9828@att.com'; echo 'To: aa9828@att.com'; echo 'Subject: ${JOB_NAME}-${BUILD_NUMBER} Execution ${execStatus}'; echo 'Content-Type: text/html'; echo 'MIME-Version: 1.0'; echo '' ; echo 'Click Link for Cucumber Report http://lstools03.snt.bst.bls.com:9098/job/${JOB_NAME}/${BUILD_NUMBER}/cucumber-html-reports/overview-features.html'; ) | sendmail -t"
+	echo 'Report sent successfully'
+}
+
+def mailExecutionReport(execStatus, body) {
+	sh "( echo 'From: aa9828@att.com'; echo 'To: aa9828@att.com'; echo 'Subject: ${JOB_NAME}-${BUILD_NUMBER} Execution ${execStatus}'; echo 'Content-Type: text/html'; echo 'MIME-Version: 1.0'; echo '' ; echo '${body}'; ) | sendmail -t"
+	echo 'Report sent successfully'
+}

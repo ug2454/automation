@@ -1,0 +1,42 @@
+<ch:WSContext>
+        <ch:WSNameValue>
+          <ch:Name>MessageTag</ch:Name>
+          <ch:Value>receiveNADSwapRequest</ch:Value>
+        </ch:WSNameValue>
+        <ch:WSNameValue>
+          <ch:Name>ApplicationID</ch:Name>
+          <ch:Value>m45678</ch:Value>
+        </ch:WSNameValue>
+      </ch:WSContext>
+      <ch:WSCallback>
+        <ch:URL/>
+        <ch:WSCorrelationId>receiveNADSwapRequest_${ban}</ch:WSCorrelationId>
+      </ch:WSCallback>
+      <ch:WSConversationId/>
+      <ch:WSMessageData>
+        <ch:MessageId/>
+        <ch:RefToMessageId/>
+        <ch:Timestamp>2008-04-25T13:42:10.679Z</ch:Timestamp>
+      </ch:WSMessageData>
+      <ch:WSResponseMessageExpiration>0</ch:WSResponseMessageExpiration>
+      <ch:WSEnterpriseLogging>
+        <ch:ApplicationID/>
+        <ch:LoggingKey/>
+      </ch:WSEnterpriseLogging>
+    </ch:WSHeader>
+  </soapenv:Header>
+  <soapenv:Body>
+    <bbnmsGcas:receiveNADSwapRequest xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bbnmsGcas="http://lightspeed.bbnms.att.com/nadswap" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <bbnmsGcas:uverseBan>${ban}</bbnmsGcas:uverseBan>
+      <bbnmsGcas:circuitId>${circuitId}</bbnmsGcas:circuitId>
+      <bbnmsGcas:attUId>rt855f</bbnmsGcas:attUId>
+      <bbnmsGcas:jobId/>
+      <bbnmsGcas:vechicleId/>
+      <bbnmsGcas:reasonCode>${reasonCode}</bbnmsGcas:reasonCode>
+    </bbnmsGcas:receiveNADSwapRequest>
+  </soapenv:Body>
+</soapenv:Envelope>]]></message>
+         </MessageSenderRequest_V2>
+      </ws:sendMessageToQueue>
+   </soapenv:Body>
+</soapenv:Envelope>

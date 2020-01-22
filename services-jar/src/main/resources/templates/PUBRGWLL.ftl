@@ -1,0 +1,135 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<soapenv:Header>
+		<ns1:MessageHeader xmlns:ns1="urn:soap.embus.sbc.com">
+			<ns1:MessageTag>com.sbc.eia.idl.rm.PublishRGActivationReturn 
+com.sbc.eia.idl.rm.RmFacadePackage.publishRGActivation(com.sbc.eia.idl.bis_types.BisContext,
+com.sbc.eia .idl.types.StringOpt,
+com.sbc.eia.idl.types.CompositeObjectKey, 
+com.sbc.eia.idl.rm_ls_types.DSLAMTransportOpt,
+com.sbc.eia.idl.rm_ls_types.ResidentialGateway, 
+com.sbc.eia.idl.types.Time, 
+com.sbc.eia.idl.rm_ls_types.OrderAction,
+com.sbc.eia.idl.types.ObjectPropertySeqOpt)
+			</ns1:MessageTag>
+			<ns1:ApplicationID>M18846</ns1:ApplicationID>
+			<ns1:LoggingKey>NONE</ns1:LoggingKey>
+		</ns1:MessageHeader>
+	</soapenv:Header>
+	<soapenv:Body>
+		<com.sbc.eia.idl.rm.RmFacadePackage._publishRGActivationRequestBISMsg xmlns="urn:RmFacadePackage.rm.idl.eia.sbc.com">
+			<context xmlns="">
+				<properties>
+					<item>
+						<tag>Application</tag>
+						<value>CMS</value>
+					</item>
+					<item>
+						<tag>BusinessUnit</tag>
+						<value>SBCLightSpeed</value>
+					</item>
+					<item>
+						<tag>CustomerName</tag>
+						<value>GeneratedSBC</value>
+					</item>
+					<item>
+						<tag>USER_ID</tag>
+						<value>vsethia@2wire.com</value>
+					</item>
+					<item>
+						<tag>REQUEST_ID</tag>
+						<value>1</value>
+					</item>
+					<item>
+						<tag>LOGICAL_SERVER</tag>
+						<value>dd.2wire.com</value>
+					</item>
+					<item>
+						<tag>INTERFACE_NAME</tag>
+						<value>localnoc</value>
+					</item>
+				</properties>
+			</context>
+			<customerTransportId xmlns="">${serviceId}</customerTransportId>
+			<billingAccountNumber xmlns="">
+				<keys>
+					<item>
+						<value>${ban}</value>
+						<kind>com.sbc.eia.bis.BillingAccountNumber</kind>
+					</item>
+				</keys>
+			</billingAccountNumber>
+			<dSLAM xmlns="">
+				<id/>
+				<physicalPort/>
+			</dSLAM>
+			<rG xmlns="">
+				<deviceId>001E46-${deviceId}</deviceId>
+				<serialNumber>${serialNumber}</serialNumber>
+				<firmwareVersionNumber>5.29.135.47</firmwareVersionNumber>
+				<modelNumber>${model!"5268AC"}</modelNumber>
+				<iPAddress>
+					<networkAddress>
+						<value>12.70.52.196</value>
+						<kind>com.sbc.eia.idl.nam_types.NetworkAddress</kind>
+					</networkAddress>
+					<networkAddressType>NetworkAddressType</networkAddressType>
+				</iPAddress>
+				<mACAddress>
+					<networkAddress>
+						<value>00:1e:c7:33:37:20</value>
+						<kind>com.sbc.eia.idl.nam_types.NetworkAddress</kind>
+					</networkAddress>
+					<networkAddressType>NetworkAddressType</networkAddressType>
+				</mACAddress>
+				<vendor>${vendor!"2Wire"}</vendor>
+			</rG>
+			<activationTime xmlns="">
+				<eiaDate>
+					<year>${year}</year>
+					<month>${month}</month>
+					<day>${day}</day>
+				</eiaDate>
+				<hour>${hour}</hour>
+				<minute>${minute}</minute>
+				<second>${sec}</second>
+				<milliSeconds>${millisec}</milliSeconds>
+				<tCOffset>-5</tCOffset>
+			</activationTime>
+			<orderAction xmlns="">
+				<order>${orderNumber}</order>
+				<orderActionId>${orderNumber}</orderActionId>
+				<orderActionType>${orderActionType}</orderActionType>
+			</orderAction>
+			<properties xmlns="">
+				<item>
+					<tag>Application</tag>
+					<value>CMS</value>
+				</item>
+				<item>
+					<tag>BusinessUnit</tag>
+					<value>SBCLightSpeed</value>
+				</item>
+				<item>
+					<tag>CustomerName</tag>
+					<value>GeneratedSBC</value>
+				</item>
+				<item>
+					<tag>USER_ID</tag>
+					<value>vsethia@2wire.com</value>
+				</item>
+				<item>
+					<tag>REQUEST_ID</tag>
+					<value>1</value>
+				</item>
+				<item>
+					<tag>LOGICAL_SERVER</tag>
+					<value>dd.2wire.com</value>
+				</item>
+				<item>
+					<tag>INTERFACE_NAME</tag>
+					<value>localnoc</value>
+				</item>
+			</properties>
+		</com.sbc.eia.idl.rm.RmFacadePackage._publishRGActivationRequestBISMsg>
+	</soapenv:Body>
+</soapenv:Envelope>
